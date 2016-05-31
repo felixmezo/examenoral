@@ -8,7 +8,7 @@ var Sequelize = require('sequelize');
 //    DATABASE_URL = sqlite:///
 //    DATABASE_STORAGE = quiz.sqlite
 // Usar BBDD Postgres:
-//    DATABASE_URL = postgres://lihqhgmdwixvpz:wWQQqfyTHtVQfYKhafl5sblYGY@ec2-54-243-204-221.compute-1.amazonaws.com:5432/d2758bpf8gk51s
+//    DATABASE_URL = postgres://jxbnidzosggqqe:8m6wjgEvWAtJl2UVTIoaG_fvy8@ec2-54-83-22-233.compute-1.amazonaws.com:5432/d216kskeiufe0o
 
 var url = process.env.DATABASE_URL;
 var storage = process.env.DATABASE_STORAGE || "";
@@ -42,6 +42,10 @@ Quiz.belongsTo(User, {as: 'Author', foreignKey: 'AuthorId'});
 // Relacion 1-a-1 ente Quiz y Attachment
 Attachment.belongsTo(Quiz);
 Quiz.hasOne(Attachment);
+
+// Relacion 1-a-N entre Comments y Users
+Comment.belongsTo(User, {as: 'Author', foreignKey:'AuthorId'});
+User.hasMany(Comment, {foreignKey: 'AuthorId'})
 
 exports.Quiz = Quiz;       // exportar definición de tabla Quiz
 exports.Comment = Comment; // exportar definición de tabla Comments
